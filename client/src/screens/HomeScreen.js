@@ -1,10 +1,10 @@
 import React from "react";
-import AppBackground from "../components/AppBackground";
+import NavBar from "../layouts/NavBar";
 
 export default function HomeScreen() {
   return (
-    <AppBackground>
+    <NavBar>
       <h1>HOME</h1>
-    </AppBackground>
+    </NavBar>
   );
 }

@@ -6,6 +6,7 @@ const cors = require("cors");
 const app = express();
 const port = 3001;
 
+const upload = require("./controllers/upload");
 const auth = require("./controllers/auth");
 const files = require("./controllers/files");
 const Websocket = require("./controllers/Websocket");
@@ -24,5 +25,6 @@ Websocket();
 
 app.use("/api/auth", auth);
 app.use("/api/documents", files);
+app.use("/api/upload", upload);
 
 app.listen(4001, () => console.log("Listening on port 4001"));

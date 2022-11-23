@@ -5,9 +5,9 @@ const userSchema = new Schema({
   email: String,
   password: String,
   name: String,
-  files: {
+  dir: {
     type: [mongoose.Types.ObjectId],
-    ref: "Document",
+    ref: "Directory",
   },
 });
 
@@ -15,7 +15,7 @@ userSchema.methods.generateAuthToken = function () {
   return (token = jwt.sign(
     {
       email: this.email,
-      files: this.files,
+      dir: this.dir,
       name: this.name,
     },
     "jwtPrivateKey"

@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    margin-top: 50px;
+    padding: 0%;
+    justify-content: center;
+}
+
+.boxContent button {
+    background-color: transparent;
+    border-radius: 20px;
+    border: 2px solid #f0f8ff;
+    display: flex;
+    margin: 10px;
+    margin-top: 30px;
+}
+
+.boxContent h3 {
+    color: aliceblue;
+    font-size: larger;
+    font-weight: 700;
+}
+
+.pop-up {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pop-up h1 {
+    font-size: 50px;
+    color: aliceblue;
+}
+
+.pop-up input {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 20px;
+    background-color: white;
+    font-size: x-large;
+}
+
+.pop-up button {
+    background-color: transparent;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: x-large;
+    color: #2ca7ee;
+    border: 3px solid #2ca7ee;
+    margin-top: 20px;
+    padding: 20px;
+}

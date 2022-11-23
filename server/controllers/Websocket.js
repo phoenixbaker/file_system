@@ -12,8 +12,8 @@ const defaultValue = "";
 
 module.exports = function runWebSocket() {
   io.on("connection", (socket) => {
-    socket.on("get-document", async (documentId) => {
-      const document = await findOrCreateDocument(documentId);
+    socket.on("get-document", async ({ documentId, documentName }) => {
+      const document = await findOrCreateDocument(documentId, documentName);
       socket.join(document._id);
 
       socket.emit("load-document", document.data);
@@ -29,11 +29,11 @@ module.exports = function runWebSocket() {
     console.log("connected");
   });
 
-  async function findOrCreateDocument(id) {
+  async function findOrCreateDocument(id, name) {
     if (id == null) return;
 
     let document = await Document.findOne({ path: id });
     if (document) return document;
-    return await Document.create({ path: id, data: defaultValue });
+    return await Document.create({ path: id, data: defaultValue, name });
   }
 };

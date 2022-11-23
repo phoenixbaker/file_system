@@ -1,0 +1,11 @@
+.list-file {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-file h1 {
+    color: aliceblue;
+    font-size: 50px;
+    align-self: center;
+    justify-self: center;
+}
