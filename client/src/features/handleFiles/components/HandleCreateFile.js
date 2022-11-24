@@ -14,7 +14,7 @@ import { FileUploader } from "./FileUploader";
 
 export default function HandleCreateFile({ children }) {
   const { path, setPath } = useContext(UserContext);
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
   const [trigger, setTrigger] = useState({
     file: false,
     dir: false,
@@ -31,21 +31,23 @@ export default function HandleCreateFile({ children }) {
   }
 
   function handleFileSubmit() {
-    if (!name.length) return;
+    if (!name.length) return false;
     handleReDirect("/new/document/" + name);
+    return true;
   }
 
   function handleDirSubmit() {
-    if (!name.length) return;
-    if (!path) return;
+    if (!name.length) return false;
+    if (!path) return false;
     handleCreateDir();
+    return true;
   }
 
   async function handleCreateDir() {
     const dir = await createDir(path[path.length - 1]._id, name);
-    // console.log("from createDir | new Dir");
-    // console.log(dir);
-    setPath([dir]);
+    let tempArr = path;
+    tempArr[tempArr.length - 1] = dir;
+    setPath(tempArr);
   }
 
   return (
@@ -112,7 +114,19 @@ export default function HandleCreateFile({ children }) {
             value={name}
             onChange={handleChange}
           />
-          <button onClick={() => handleFileSubmit()}>
+          <button
+            onClick={() => {
+              const bool = handleFileSubmit();
+              if (bool) {
+                setName("");
+                return setTrigger({
+                  file: false,
+                  dir: false,
+                  upload: false,
+                });
+              }
+            }}
+          >
             Create New Document
           </button>
         </div>
@@ -135,7 +149,19 @@ export default function HandleCreateFile({ children }) {
             value={name}
             onChange={handleChange}
           />
-          <button onClick={() => handleDirSubmit()}>
+          <button
+            onClick={() => {
+              const bool = handleDirSubmit();
+              if (bool) {
+                setName("");
+                return setTrigger({
+                  file: false,
+                  dir: false,
+                  upload: false,
+                });
+              }
+            }}
+          >
             Create New Directory
           </button>
         </div>

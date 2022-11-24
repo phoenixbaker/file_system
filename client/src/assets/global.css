@@ -12,6 +12,11 @@ code {
         monospace;
 }
 
+button :hover {
+    cursor: pointer;
+}
+
+
 .Background {
     background-color: #282c34;
     min-height: 100vh;

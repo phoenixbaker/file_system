@@ -10,9 +10,12 @@ function App() {
     JSON.parse(localStorage.getItem("user"))
   );
   const [path, setPath] = useState(null);
+  const [files, setFiles] = useState(null);
 
   return (
-    <UserContext.Provider value={{ userState, setUserState, path, setPath }}>
+    <UserContext.Provider
+      value={{ userState, setUserState, path, setPath, files, setFiles }}
+    >
       <Router>
         <AppRoutes />
       </Router>

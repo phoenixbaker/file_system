@@ -9,3 +9,26 @@
     align-self: center;
     justify-self: center;
 }
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list h1 {
+    align-self: flex-start;
+}
+
+.list li {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10em,20em));
+    flex-direction: row;
+}
+
+.list div {
+    margin-top: 30px;
+}
+
+.list img {
+    border-radius: 30px;
+}

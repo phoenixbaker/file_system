@@ -23,6 +23,7 @@ conn.once("open", () => {
       directory.files.push(file);
     });
     directory.save();
+    res.send(directory);
   });
 
   router.get("/files/:id", async (req, res) => {

@@ -11,38 +11,54 @@ import RenderBox from "../../../components/ui/RenderBox";
 import { UserContext } from "../../../context/userContext";
 import "./ListFiles.css";
 import { getPreview } from "../../handleFiles/services/upload";
+import handleName from "../../../utils/HandleFileName";
+import RenderList from "./RenderList";
+import RenderPhotoList from "./RenderPhotoList";
 
 export default function ListFiles() {
-  const { path, setPath, userState, setUserState } = useContext(UserContext);
-  const [files, setFiles] = useState(null);
+  const { path, setPath, userState, files, setFiles } = useContext(UserContext);
   const [loaded, setLodaed] = useState(false);
   const [preview, setPreview] = useState(null);
 
   const history = useHistory();
 
   useEffect(() => {
+    async function handleLaunch() {
+      let res = await getDir(userState.dir[0]);
+      setPath([res]);
+    }
     if (path === null) handleLaunch();
-  }, []);
+  }, [path, userState, setPath]);
 
   useEffect(() => {
-    handleDir();
+    if (path === null) return;
   }, [path]);
 
   useEffect(() => {
+    async function handleDir() {
+      const res = await getDir(path[path.length - 1]._id);
+      setFiles(res);
+    }
+
+    if (path === null) return;
+    handleDir();
+  }, [path, setFiles]);
+
+  useEffect(() => {
     if (files === null) return;
+
+    async function handlePreview() {
+      const promises = files.files.map(async (file, i) => {
+        let res = await getPreview(file.id);
+        return `data:image/png;base64,${res}`;
+      });
+      let tempArr = await Promise.all(promises);
+      setPreview(tempArr);
+      return setLodaed(true);
+    }
+
     handlePreview();
   }, [files]);
-
-  async function handleLaunch() {
-    let res = await getDir(userState.dir[0]);
-    setPath([res]);
-  }
-
-  async function handleDir() {
-    if (path === null) return;
-    const res = await getDir(path[path.length - 1]._id);
-    setFiles(res);
-  }
 
   function handleDirNavigation(dir) {
     setPath((prevArray) => [...prevArray, dir]);
@@ -57,16 +73,6 @@ export default function ListFiles() {
     history.push(`documents/${path}/${name}`);
   }
 
-  async function handlePreview() {
-    const promises = files.files.map(async (file, i) => {
-      let res = await getPreview(file.id);
-      return `data:image/png;base64,${res}`;
-    });
-    let tempArr = await Promise.all(promises);
-    setPreview(tempArr);
-    return setLodaed(true);
-  }
-
   return (
     <div className="list-file">
       <h1>{path && path[path.length - 1].name}</h1>
@@ -78,50 +84,25 @@ export default function ListFiles() {
           onClick={() => handleDirBack()}
         />
       )}
-      {files?.dirs &&
-        files.dirs.map((dir, i) => {
-          return (
-            <>
-              <h1 style={{ alignSelf: "flex-start" }}>Directories</h1>
-              <RenderBox
-                fade={false}
-                key={i}
-                text={dir.name}
-                JSXIcon={<UilFolder size="100" color="#f0f8ff" />}
-                onClick={() => handleDirNavigation(dir)}
-              />
-            </>
-          );
-        })}
-      {files?.docs &&
-        files.docs.map((doc, i) => {
-          return (
-            <>
-              <h1 style={{ alignSelf: "flex-start" }}>Documents</h1>
-              <RenderBox
-                fade={false}
-                text={doc.name}
-                JSXIcon={<UilFile size="100" color="#f0f8ff" />}
-                onClick={() => handleDocNavigation(doc)}
-              />
-            </>
-          );
-        })}
-      {files?.files &&
-        loaded &&
-        files.files.map((file, i) => {
-          return (
-            <>
-              <h1 style={{ alignSelf: "flex-start" }}>Files</h1>
-              <RenderBox
-                fade={false}
-                key={i}
-                text={file.filename}
-                JSXIcon={<img src={preview[i]} width="200" />}
-              />
-            </>
-          );
-        })}
+
+      <RenderList
+        Header="Directories"
+        data={files?.dirs}
+        onClick={(dir) => handleDirNavigation(dir)}
+        JSXIcon={<UilFolder size="100" color="#f0f8ff" />}
+      />
+      <RenderList
+        Header="Documents"
+        data={files?.docs}
+        onClick={(doc) => handleDocNavigation(doc)}
+        JSXIcon={<UilFile size="100" color="#f0f8ff" />}
+      />
+      <RenderPhotoList
+        Header="Files"
+        data={files?.files}
+        previewLoaded={loaded}
+        previewArr={preview}
+      />
     </div>
   );
 }

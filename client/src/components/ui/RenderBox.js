@@ -8,6 +8,7 @@ export default function RenderBox({
   fade = true,
   onClick,
   JSXNewContent,
+  img = false,
 }) {
   const [isShown, setIsShown] = useState(false);
   const boxRef = useRef();
@@ -15,7 +16,7 @@ export default function RenderBox({
   if (!fade) {
     return (
       <button className="fileBox" onClick={onClick}>
-        {JSXIcon}
+        <div className="JSXContainer">{img ? img : JSXIcon}</div>
         <h2>{text}</h2>
       </button>
     );
@@ -40,7 +41,7 @@ export default function RenderBox({
     >
       {!isShown ? (
         <div>
-          {JSXIcon}
+          <div>{JSXIcon}</div>
           <h2>{text}</h2>
         </div>
       ) : (
