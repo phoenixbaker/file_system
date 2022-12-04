@@ -1,19 +1,19 @@
-import React, { useState, useContext } from "react";
+import useUser from "hooks/useUser";
+import React, { useState, useContext, ChangeEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { logIn } from "../services/auth";
-
-import { UserContext } from "../../../context/userContext";
 import "./LogInBox.css";
 
 export default function LogInBox() {
   const history = useHistory();
-  const { setUserState } = useContext(UserContext);
+  const { setUser } = useUser();
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
-  function handleChange(evnt) {
+  function handleChange(evnt: ChangeEvent<HTMLInputElement>) {
+    if (!evnt) return;
     const value = evnt.target.value;
     setState({
       ...state,
@@ -25,7 +25,7 @@ export default function LogInBox() {
     const res = await logIn(state);
     if (typeof res === "string")
       return console.log("Do Handle Wrong Password/Email");
-    setUserState(res);
+    setUser(res);
     localStorage.setItem("user", JSON.stringify(res));
   }
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useContext } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { io } from "socket.io-client";
@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 
 import "./FileTemplate.css";
 import { createDocument } from "../services/document";
-import { UserContext } from "../../../context/userContext";
+import useFiles from "hooks/useFiles";
 
-const SAVE_INTERVAL_MS = "2000";
+const SAVE_INTERVAL_MS = 2000;
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -23,15 +23,17 @@ const TOOLBAR_OPTIONS = [
 ];
 
 export default function FileTemplate() {
-  const { path } = useContext(UserContext);
+  const { path } = useFiles();
   const { id: documentId, name: documentName } = useParams();
-  const [socket, setSocket] = useState();
-  const [quill, setQuill] = useState();
+  const [socket, setSocket] = useState<any>();
+  const [quill, setQuill] = useState<Quill>();
 
   useEffect(() => {
     if (socket == null || quill == null) return;
-    socket.once("load-document", (document) => {
-      createDocument(documentId, path[path.length - 1]._id);
+    socket.once("load-document", (document: any) => {
+      if (!documentId)
+        return console.error("ayo help in FileTemplate with the Params");
+      createDocument(documentId, path[path.length - 1]._id!);
       quill.setContents(document);
       quill.enable();
     });
@@ -50,7 +52,7 @@ export default function FileTemplate() {
   useEffect(() => {
     if (socket == null || quill == null) return;
 
-    const handler = (delta) => {
+    const handler = (delta: any) => {
       quill.updateContents(delta);
     };
     socket.on("receive-changes", handler);
@@ -63,7 +65,7 @@ export default function FileTemplate() {
   useEffect(() => {
     if (socket == null || quill == null) return;
 
-    const handler = (delta, oldDelta, source) => {
+    const handler = (delta: any, oldDelta: any, source: any) => {
       if (source !== "user") return;
       socket.emit("send-changes", delta);
     };
@@ -86,7 +88,7 @@ export default function FileTemplate() {
     };
   }, [socket, quill]);
 
-  const wrapperRef = useCallback((wrapper) => {
+  const wrapperRef = useCallback((wrapper: any) => {
     if (wrapper == null) return;
 
     wrapper.innerHTML = "";

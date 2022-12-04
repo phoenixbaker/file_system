@@ -1,6 +1,22 @@
-import React, { useState, useRef } from "react";
-import { animated, useSpring } from "react-spring";
+import React, { useState, useRef, MouseEventHandler, ReactNode } from "react";
+import { animated, useSpring, UseSpringProps } from "react-spring";
 import "./renderBox.css";
+
+// ! REDO THIS WHOLE DOC
+
+export type RenderBoxProps = {
+  JSXIcon?: ReactNode;
+  text: string;
+  fade?: boolean;
+  onClick?: MouseEventHandler;
+  JSXNewContent?: ReactNode;
+  img?: ReactNode | boolean;
+};
+
+export type FadeProps = {
+  children: ReactNode;
+  springStyle: UseSpringProps;
+};
 
 export default function RenderBox({
   JSXIcon,
@@ -9,20 +25,20 @@ export default function RenderBox({
   onClick,
   JSXNewContent,
   img = false,
-}) {
+}: RenderBoxProps) {
   const [isShown, setIsShown] = useState(false);
-  const boxRef = useRef();
+  const boxRef = useRef<HTMLButtonElement>(null!);
 
   if (!fade) {
     return (
-      <button className="fileBox" onClick={onClick}>
+      <button className="fileBox" onClick={(e) => onClick && onClick(e)}>
         <div className="JSXContainer">{img ? img : JSXIcon}</div>
         <h2>{text}</h2>
       </button>
     );
   }
 
-  const Fade = ({ children, springStyle }) => {
+  const Fade = ({ children, springStyle }: FadeProps) => {
     const styles = useSpring(springStyle);
 
     return <animated.div style={styles}>{children}</animated.div>;

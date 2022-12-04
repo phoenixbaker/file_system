@@ -1,31 +1,48 @@
-import React, { useState, useContext } from "react";
+import React, { useState, ReactNode, ChangeEvent } from "react";
 import { useHistory } from "react-router-dom";
 
-import { UilFilePlus } from "@iconscout/react-unicons";
-import { UilFolderPlus } from "@iconscout/react-unicons";
-import { UilUpload } from "@iconscout/react-unicons";
+import {
+  UilFilePlus,
+  UilFolderPlus,
+  UilUpload,
+  // @ts-ignore
+} from "@iconscout/react-unicons";
 
-import Popup from "../../../components/ui/Popup";
-import RenderBox from "../../../components/ui/RenderBox";
+import Popup from "components/ui/Popup";
+import RenderBox from "components/ui/RenderBox";
 import "./HandleCreateFile.css";
 import { createDir } from "../services/document";
-import { UserContext } from "../../../context/userContext";
 import { FileUploader } from "./FileUploader";
+import useFiles from "hooks/useFiles";
+import { PathType } from "hooks/useFiles/types";
 
-export default function HandleCreateFile({ children }) {
-  const { path, setPath } = useContext(UserContext);
+export type HandleCreateFileProps = {
+  children?: ReactNode;
+};
+
+type TriggerType = {
+  file?: boolean;
+  dir?: boolean;
+  upload?: boolean;
+};
+
+export default function HandleCreateFile({ children }: HandleCreateFileProps) {
+  const { path, setPath } = useFiles();
   const [name, setName] = useState("");
-  const [trigger, setTrigger] = useState({
+  const [trigger, setTrigger] = useState<TriggerType>({
     file: false,
     dir: false,
     upload: false,
   });
+
   const history = useHistory();
-  function handleReDirect(dest) {
+
+  function handleReDirect(dest: string) {
     history.push(dest);
   }
 
-  function handleChange(evnt) {
+  function handleChange(evnt: ChangeEvent<HTMLInputElement>) {
+    if (!evnt) return;
     const value = evnt.target.value;
     setName(value);
   }
@@ -44,7 +61,12 @@ export default function HandleCreateFile({ children }) {
   }
 
   async function handleCreateDir() {
-    const dir = await createDir(path[path.length - 1]._id, name);
+    const tempPath = path[path.length - 1]._id;
+    if (!tempPath) return;
+
+    const dir = await createDir(tempPath, name);
+    if (!dir) return;
+
     let tempArr = path;
     tempArr[tempArr.length - 1] = dir;
     setPath(tempArr);

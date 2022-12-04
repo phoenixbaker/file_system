@@ -1,7 +1,16 @@
-import React from "react";
+import AnimatedRenderBox from "components/animated/AnimatedRenderBox";
+import React, { MouseEventHandler } from "react";
 
 import RenderBox from "../../../components/ui/RenderBox";
 import handleName from "../../../utils/HandleFileName";
+
+export type RenderPhotoListType = {
+  Header?: string;
+  data: Array<any>;
+  previewArr: Array<any>;
+  onClick?: MouseEventHandler;
+  previewLoaded?: boolean;
+};
 
 export default function RenderPhotoList({
   Header,
@@ -9,8 +18,8 @@ export default function RenderPhotoList({
   previewArr,
   onClick,
   previewLoaded = true,
-}) {
-  if (!previewLoaded) return;
+}: RenderPhotoListType) {
+  if (!previewLoaded) return null;
   return (
     <div className="list">
       <h1>{Header}</h1>
@@ -18,7 +27,7 @@ export default function RenderPhotoList({
         {data.map((file, i) => {
           return (
             <div className="imgContainer">
-              <RenderBox
+              <AnimatedRenderBox
                 fade={false}
                 key={i}
                 text={handleName(file.filename)}

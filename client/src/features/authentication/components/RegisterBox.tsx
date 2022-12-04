@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
-import { UserContext } from "../../../context/userContext";
+import React, { ChangeEvent, useState } from "react";
 
+import useUser from "hooks/useUser";
 import { registerUser } from "../services/auth";
 import "./LogInBox.css";
 
@@ -12,17 +12,17 @@ const defaultState = {
 };
 
 export default function RegisterBox() {
-  const { setUserState } = useContext(UserContext);
+  const { setUser } = useUser();
   const [state, setState] = useState(defaultState);
 
   async function handleSubmit() {
     if (state.password !== state.confirmPassword)
       return console.log("make red");
     const res = await registerUser(state);
-    setUserState(res);
+    setUser(res);
   }
 
-  function handleCap(evnt) {
+  function handleCap(evnt: ChangeEvent<HTMLInputElement>) {
     const value = evnt.target.value;
     var splitStr = value.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
@@ -36,7 +36,7 @@ export default function RegisterBox() {
     });
   }
 
-  function handleChange(evnt) {
+  function handleChange(evnt: ChangeEvent<HTMLInputElement>) {
     const value = evnt.target.value;
     setState({
       ...state,

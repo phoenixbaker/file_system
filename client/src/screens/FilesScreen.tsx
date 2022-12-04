@@ -1,3 +1,4 @@
+import useUser from "hooks/useUser";
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 
@@ -7,8 +8,8 @@ import ListFiles from "../features/listFiles/components/ListFiles";
 import NavBar from "../layouts/NavBar";
 
 export default function FilesScreen() {
-  const { userState } = useContext(UserContext);
-  if (userState === null) return <Redirect to="/auth/login" />;
+  const { user } = useUser();
+  if (!user) return <Redirect to="/auth/login" />;
 
   return (
     <NavBar>

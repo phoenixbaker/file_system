@@ -2,7 +2,7 @@ import apiClient from "../../../lib/client";
 
 const endpoint = "/upload";
 
-const uploadFormData = async (formData, path_id) => {
+const uploadFormData = async (formData: FormData, path_id: string) => {
   let { data, ok, problem } = await apiClient.post(
     endpoint + "/files/" + path_id,
     formData
@@ -12,9 +12,4 @@ const uploadFormData = async (formData, path_id) => {
   return data;
 };
 
-const getPreview = async (id) => {
-  let { data } = await apiClient.get(endpoint + "/files/" + id);
-  return data;
-};
-
-export { uploadFormData, getPreview };
+export { uploadFormData };

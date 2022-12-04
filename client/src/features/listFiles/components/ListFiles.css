@@ -1,34 +1,36 @@
 .list-file {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 .list-file h1 {
-    color: aliceblue;
-    font-size: 50px;
-    align-self: center;
-    justify-self: center;
+  color: aliceblue;
+  font-size: 50px;
+  align-self: center;
+  justify-self: center;
 }
 
 .list {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .list h1 {
-    align-self: flex-start;
+  align-self: flex-start;
 }
 
 .list li {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10em,20em));
-    flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10em, 20em));
+  flex-direction: row;
 }
 
 .list div {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .list img {
-    border-radius: 30px;
+  border-radius: 30px;
 }

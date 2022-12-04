@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { ReactNode, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
 import "../assets/global.css";
+import useUser from "hooks/useUser";
 
-export default function AppBackground({ children }) {
-  const { userState, setUserState } = useContext(UserContext);
+export default function AppBackground({ children }: { children: ReactNode }) {
+  // const { userState, setUserState } = useContext(UserContext);
+  const { user, setUser } = useUser();
   const history = useHistory();
 
-  function handleReDirect(dest) {
+  function handleReDirect(dest: string) {
     history.push(dest);
   }
 
@@ -27,7 +29,7 @@ export default function AppBackground({ children }) {
           </button>
         </div>
         <div className="Header-Containter Account-Container">
-          {userState === null ? (
+          {user === null ? (
             <button onClick={() => handleReDirect("/auth/login")}>
               <h1 className="Header1">Account</h1>
             </button>
@@ -35,11 +37,11 @@ export default function AppBackground({ children }) {
             <button
               onClick={() => {
                 localStorage.clear();
-                setUserState(null);
+                setUser(null);
                 return handleReDirect("/");
               }}
             >
-              <h1 className="Header1">{userState.name}</h1>
+              <h1 className="Header1">{user.name}</h1>
             </button>
           )}
         </div>

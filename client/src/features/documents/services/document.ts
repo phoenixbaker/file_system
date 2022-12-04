@@ -2,11 +2,10 @@ import apiClient from "../../../lib/client";
 
 const endpoint = "/documents";
 
-const createDocument = async (id, path) => {
+const createDocument = async (id: string, path: string) => {
   let user = localStorage.getItem("user");
+  if (!user) return;
   user = JSON.parse(user);
-  console.log("from storage");
-  console.log(user.email);
   let { data } = await apiClient.post(endpoint + "/new", {
     id,
     dir_id: path,
