@@ -27,9 +27,6 @@ router.post("/dir", async (req, res) => {
   });
   newDir.save();
 
-  console.log("new Dir");
-  console.log("new Dir");
-
   dir.dirs.push(newDir);
   dir.save();
   dir.populate(["dirs", "docs"]);

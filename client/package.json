@@ -19,6 +19,7 @@
     "quill": "^1.3.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
     "react-router": "^6.4.3",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
@@ -31,7 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll --verbose --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,5 +53,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/jest": "^29.2.3"
+  }
 }

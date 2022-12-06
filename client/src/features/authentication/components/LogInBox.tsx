@@ -23,8 +23,7 @@ export default function LogInBox() {
 
   async function handleSubmit() {
     const res = await logIn(state);
-    if (typeof res === "string")
-      return console.log("Do Handle Wrong Password/Email");
+    if (!res) return console.log("Do Handle Wrong Password/Email");
     setUser(res);
     localStorage.setItem("user", JSON.stringify(res));
   }

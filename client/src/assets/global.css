@@ -1,88 +1,138 @@
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: aliceblue;
+  overflow: hidden; /* Hide scrollbars */
+}
+
+p {
+  font-size: 26px;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 button :hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
+.transparentButton {
+  background-color: transparent;
+  border: none;
+}
+
+.flex {
+  display: flex;
+  position: relative;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.zindex0 {
+  z-index: 0;
+}
+
+.zindex1 {
+  z-index: 1;
+}
+
+.absolute {
+  display: flex;
+  position: absolute;
+}
+
+.height100vh {
+  height: 90vh;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.width75 {
+  width: 75%;
+}
+
+.flew-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
 
 .Background {
-    background-color: #282c34;
-    min-height: 100vh;
+  background-color: #282c34;
+  min-height: 100vh;
 }
 
 .Header-Center {
-    display: flex;
-    flex: auto;
+  display: flex;
+  flex: auto;
 }
 
 .Header-Containter {
-    max-height: 8vh;
-    flex: auto;
-    flex-direction: row;
-    display: flex;
-    background-color: #81817f59;
+  max-height: 8vh;
+  flex: auto;
+  flex-direction: row;
+  display: flex;
+  background-color: #81817f59;
 
-    align-items: center;
+  align-items: center;
 }
 
 .navbar button {
-    background-color: transparent;
-    border: none;
-    color: white;
+  background-color: transparent;
+  border: none;
+  color: white;
 }
 
 .navbar button :hover {
-    cursor: pointer;
-    color: #2ca7ee
+  cursor: pointer;
+  color: #2ca7ee;
 }
 
-
 .Margin-2 {
-    margin-left: 2%;
+  margin-left: 2%;
 }
 
 .Margin-10 {
-    margin-left: 10%;
+  margin-left: 10%;
 }
 
 .Header1 {
-    font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2vmin);
 }
 
 .Header2 {
-    font-size: calc(12px + 1vmin);
+  font-size: calc(12px + 1vmin);
 }
 
 .navbar {
-    flex: auto;
-    display: flex;
+  flex: auto;
+  display: flex;
 }
 
 .Account-Container {
-    justify-content: flex-end;
-    padding: 2%;    
+  justify-content: flex-end;
+  padding: 2%;
 }
 
-
-
 .navbar a {
-    text-decoration: none;
-    padding: 6px;
-    color: white;
+  text-decoration: none;
+  padding: 6px;
+  color: white;
 }
 
 .navbar a:hover {
-    color: #2ca7ee
+  color: #2ca7ee;
 }

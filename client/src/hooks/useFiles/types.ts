@@ -14,4 +14,11 @@ export type PhotoType = {
   contentType?: string;
 };
 
+export type DocumentType = {
+  _id?: string;
+  path?: string;
+  name?: string;
+  data?: Object;
+};
+
 export type PathType = Array<FilesType>;

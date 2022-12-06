@@ -19,7 +19,7 @@ export default function RegisterBox() {
     if (state.password !== state.confirmPassword)
       return console.log("make red");
     const res = await registerUser(state);
-    setUser(res);
+    setUser(res!);
   }
 
   function handleCap(evnt: ChangeEvent<HTMLInputElement>) {
